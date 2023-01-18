@@ -1,3 +1,3 @@
-@media screen and (max-width: 1024px){.notes-container .lower{column-count: 3 !important;}}
+@media screen and (max-width: 1024px){.notes-container .lower{column-count: 3 !important;.note .buttons{flex-direction: column; button{width: 100%}}}}
 @media screen and (max-width: 600px){.notes-container {.upper{width: 90% !important;}.lower{column-count: 2 !important;}}}
 @media screen and (max-width: 500px){.notes-container .lower{column-count: 1 !important;}}

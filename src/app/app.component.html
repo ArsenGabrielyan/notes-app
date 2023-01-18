@@ -2,23 +2,60 @@
   <div class="upper">
     <div class="app-title">
       <h1>Notes</h1>
-      opt
+      <div class="tabs">
+        <button [ngClass]="tabs === 'notes' ? 'active' : ''" (click)="switchTab('notes')"><app-icon iconName="edit_note"></app-icon></button>
+        <button [ngClass]="tabs === 'deleted' ? 'active' : ''" (click)="switchTab('deleted')"><app-icon iconName="folder_delete"></app-icon></button>
+      </div>
     </div>
     <form class="form" [formGroup]="notesForm" (ngSubmit)="addNote()">
       <input type="text" name="title" id="title" class="inputBox" placeholder="Title" formControlName="title">
       <textarea name="note" id="onte" class="noteBox" placeholder="Write Any Note" rows="10" formControlName="note"></textarea>
-      <button type="submit">Add Note</button>
+      <button type="submit" [disabled]="notesForm.get('title')?.hasError('hasAnyBlankSpaces') && notesForm.get('note')?.hasError('hasAnyBlankSpaces')">Add Note</button>
     </form>
   </div>
-  <div class="lower">
-      <div class="note" *ngFor="let el of notes">
+  <div class="lower" *ngIf="tabs === 'notes'">
+      <div class="note" *ngFor="let el of notes; let i=index">
         <h2>{{el.title}}</h2>
         <p>{{el.note}}</p>
         <div class="buttons">
-          <button>Edit</button>
-          <button>Delete</button>
-          <button>Show</button>
+          <button type="button" (click)="openEditModal(i)" secondSelection><app-icon iconName="edit"></app-icon></button>
+          <button type="button" (click)="deleteNote(i)"><app-icon iconName="delete"></app-icon></button>
+          <button type="button" (click)="openViewModal(i)"><app-icon iconName="open_in_new"></app-icon></button>
         </div>
       </div>
+  </div>
+  <div class="lower" *ngIf="tabs === 'deleted'">
+    <div class="note" *ngFor="let note of deleted; let i=index">
+      <h2>{{note.title}}</h2>
+      <p>{{note.note}}</p>
+      <button class="oneBtn" (click)="deleteForever(i)"><app-icon iconName="delete_forever"></app-icon></button>
+    </div>
+  </div>
+  <div class="modal-container" *ngIf="editModal"> 
+    <div class="edit-modal" id="edit">
+      <button type="button" class="closeBtn" (click)="closeEditModal()"><app-icon iconName="close"></app-icon></button>
+      <div class="modal-title">
+        <h2 class="title">Edit Note</h2>
+        <div class="border"></div>
+      </div>
+      <div class="modal-desc">
+        <p class="modal-desc-heading" *ngIf="oldTitle">Old Title:</p>
+        <p>{{oldTitle}}</p>
+        <p class="modal-desc-heading" *ngIf="oldNote">Old Note:</p>
+        <p>{{oldNote}}</p>
+      </div>
+      <form [formGroup]="editForm" (ngSubmit)="editNote()">
+        <input type="text" formControlName="newTitle">
+        <textarea formControlName="newNote"></textarea>
+        <button type="submit" [disabled]="editForm.get('newTitle')?.hasError('hasAnyBlankSpaces') && editForm.get('newNote')?.hasError('hasAnyBlankSpaces')">Apply and Close</button>
+      </form>
+    </div>
+  </div>
+  <div class="modal-container" *ngIf="viewModal">
+    <div class="view-modal" id="view">
+      <button type="button" class="closeBtn" (click)="closeViewModal()"><app-icon iconName="close"></app-icon></button>
+      <h2>{{viewTitle}}</h2>
+      <p>{{viewNote}}</p>
+    </div>
   </div>
 </div>

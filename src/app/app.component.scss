@@ -1,50 +1,78 @@
 $green: #22b455; $input-size: 18px;
 $grey: #9f9f9f; $br: 7px; 
-@mixin flex-align($j,$a){justify-content: $j;align-items: $a;}
+@import "./scss/mixins.scss";
 .notes-container{
-     display: flex;@include flex-align(flex-start, center);
+     display: flex;@include flex-align(flex-start, center);position: relative;
      flex-direction: column;min-height: 100vh;background: $green;
      .upper{
           width: 100%;max-width: 512px; border-radius: $br;
           background: #f0f0f0;padding: 25px;margin-top: 50px;
-          .app-title{margin: 10px 0;display: flex;@include flex-align(space-between, center); }
+          .app-title{margin: 10px 0;display: flex;@include flex-align(space-between, center);}
+          .tabs{
+               display: flex;
+               @include flex-align(flex-end,center);
+               flex-wrap: wrap;
+               button{
+                    border: none; background: none; outline: none;
+                    margin-left: 20px; cursor: pointer;
+                    &:hover span{opacity: .5;}
+                    &.active span{color: $green;}
+                    span{font-size: 32px;transition: .3s ease all;}
+               }
+          }
           .form{
                width: 100%;display: flex;flex-direction: column;
                @include flex-align(center, center);
-               .inputBox, .noteBox{
-                    width: 100%;padding: 8px 16px;
-                    margin: 10px 0;font-size: $input-size;
-                    border: 2px solid $grey;outline: none;
-                    border-radius: $br;transition: .3s ease all;&:focus{border-color: $green;}
-               }
+               .inputBox, .noteBox{@include input-box;}
                .noteBox{resize: vertical;margin: 0;&:focus{border-color: $green;}}
-               button{
-                    width: 100%;padding: 8px 16px;
-                    font-size: $input-size;margin: 10px 0;
-                    border: 2px solid $green;color: $green;
-                    border-radius: $br;background: none;
-                    outline: none;cursor: pointer;
-                    transition: .3s ease all;&:hover{background: #22b455;color: white;}
-               }
+               button{@include input-btn;}
           }
      }
      .lower{
           margin: 10px 0;width: 100% !important;padding: 25px;column-count: 5;gap: 10px;
           .note{
                break-inside: avoid;background: #a4ffb5;
-               max-width: 350px;padding: 25px 20px;
+               max-width: 350px;padding: 25px;
                border-radius: $br;margin: 10px;
-               p,h1{overflow-wrap: break-word;}
+               p,h2{overflow-wrap: break-word;word-break: break-word;}
+               h2{margin-bottom: 15px;}
+               p{@include truncate-line(12);}
                .buttons{
-                    margin: 10px 0;display: flex;flex-wrap: wrap;
-                    button{
-                         width: 100%;padding: 10px 20px;
-                         margin:5px;border: 2px solid $green;
-                         background: none; outline: none;color: #22b455;
-                         font-size: $input-size;border-radius: $br;cursor: pointer;
-                         transition: .3s ease all;&:hover{background: #22b455;color: white;}
-                    }
+                    margin: 10px 0;display:flex;flex-wrap:wrap;@include flex-align(space-between,center);
+                    button{@include noteBtn();}
                }
+               button:not(.buttons button){
+                    width: 100%;
+                    @include noteBtn(15px 0);
+               }
+          }
+     }
+}
+.modal-container{
+     width: 100%;height: 100vh;
+     position: fixed;top: 0;right: 0;
+     background: rgba(0,0,0,.45);display: flex;
+     @include flex-align(center,center);flex-direction: column;
+     .edit-modal, .view-modal{
+          margin: 5px 0;background: #a4ffb5;
+          width: 100%;max-width: 450px;
+          padding: 20px;position: relative;
+          .modal-title{.title{font-size: 25px;}.border{width: 100%;border-bottom: 1px solid $green;margin-top: 10px;}}
+          .modal-desc{
+               padding:5px 10px;p{@include truncate-string(450px)}
+               .modal-desc-heading{font-size: 20px;font-weight: 500;}
+          }
+          .closeBtn{@include close-btn;}
+     }
+     .edit-modal form{
+          display: flex;@include flex-align(center,center);flex-direction: column;
+          input, textarea{@include input-box;}button{@include input-btn;}
+          textarea{resize: vertical;margin: 0;&:focus{border-color: $green;}}
+     }
+     .view-modal{
+          h2{margin-bottom: 15px;}
+          p{
+            max-height: 600px; overflow-y: auto; overflow-wrap: break-word;word-break: break-all;
           }
      }
 }
