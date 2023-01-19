@@ -14,7 +14,7 @@ $grey: #9f9f9f; $br: 7px;
      border-radius: $br;background: none;
      outline: none;cursor: pointer;
      transition: .3s ease all;
-     &:disabled{border:2px solid grey;color: grey;cursor: auto !important;}
+     &:disabled{border:2px solid grey;color: grey;cursor: auto;}
      &:hover:not(:disabled){background: #22b455;color: white;}
 }
 @mixin input-box{
@@ -23,15 +23,10 @@ $grey: #9f9f9f; $br: 7px;
      border: 2px solid $grey;outline: none;
      border-radius: $br;transition: .3s ease all;&:focus{border-color: $green;}
 }
-@mixin truncate-line($line: 5){
+@mixin truncate($line: 5){
      overflow: hidden;text-overflow: ellipsis;display: -webkit-box;
      -webkit-line-clamp: $line;line-clamp: $line;
      -webkit-box-orient: vertical;box-orient: vertical;
-}
-@mixin truncate-string($w){
-     width: 100%;max-width: $w;
-     white-space: nowrap;overflow: hidden;
-     text-overflow: ellipsis;margin: 8px 0;
 }
 @mixin noteBtn($m: 5px){
      padding: 10px;margin:$m;border: 2px solid $green;
