@@ -3,8 +3,8 @@
     <div class="app-title">
       <h1>Notes</h1>
       <div class="tabs">
-        <button [ngClass]="{'active': tab === 'notes'}" (click)="switchTab('notes')"><app-icon iconName="edit_note"></app-icon></button>
-        <button [ngClass]="{'active': tab === 'deleted'}" (click)="switchTab('deleted')"><app-icon iconName="folder_delete"></app-icon></button>
+        <button [ngClass]="{'active': tab === 'notes'}" (click)="switchTab('notes')"><span class="material-symbols-outlined">edit_note</span></button>
+        <button [ngClass]="{'active': tab === 'deleted'}" (click)="switchTab('deleted')"><span class="material-symbols-outlined">folder_delete</span></button>
       </div>
     </div>
     <form class="form" [formGroup]="frmNotes" (ngSubmit)="addNote()">
@@ -18,9 +18,9 @@
         <h2>{{nt.title}}</h2>
         <p>{{nt.note}}</p>
         <div class="buttons">
-          <button type="button" (click)="openEditModal(i)" secondSelection><app-icon iconName="edit"></app-icon></button>
-          <button type="button" (click)="deleteNote(i)"><app-icon iconName="delete"></app-icon></button>
-          <button type="button" (click)="openViewModal(i)"><app-icon iconName="open_in_new"></app-icon></button>
+          <button type="button" (click)="openEditModal(i)"><span class="material-symbols-outlined">edit</span></button>
+          <button type="button" (click)="deleteNote(i)"><span class="material-symbols-outlined">delete</span></button>
+          <button type="button" (click)="openViewModal(i)"><span class="material-symbols-outlined">open_in_new</span></button>
         </div>
       </div>
   </div>
@@ -28,12 +28,12 @@
     <div class="note" *ngFor="let nt of deleted; let i=index">
       <h2>{{nt.title}}</h2>
       <p>{{nt.note}}</p>
-      <button class="oneBtn" (click)="deleteForever(i)"><app-icon iconName="delete_forever"></app-icon></button>
+      <button class="oneBtn" (click)="deleteForever(i)"><span class="material-symbols-outlined">delete_forever</span></button>
     </div>
   </div>
   <div class="modal-container" *ngIf="editMdl || viewMdl"> 
     <div class="edit-modal" *ngIf="editMdl">
-      <button type="button" class="closeBtn" (click)="closeEditModal()"><app-icon iconName="close"></app-icon></button>
+      <button type="button" class="closeBtn" (click)="closeEditModal()"><span class="material-symbols-outlined">close</span></button>
       <div class="modal-title">
         <h2 class="title">Edit Note</h2>
         <div class="border"></div>
@@ -45,7 +45,7 @@
       </form>
     </div>
     <div class="view-modal" *ngIf="viewMdl">
-      <button type="button" class="closeBtn" (click)="closeViewModal()"><app-icon iconName="close"></app-icon></button>
+      <button type="button" class="closeBtn" (click)="closeViewModal()"><span class="material-symbols-outlined">close</span></button>
       <h2>{{viewTitle}}</h2>
       <p>{{viewNote}}</p>
     </div>

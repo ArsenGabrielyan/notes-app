@@ -9,9 +9,15 @@ import { Note } from './interfaces/note';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit{
-  frmNotes!: FormGroup; frmEdit!: FormGroup;
-  editMdl = false; viewMdl = false;oldTitle!: string; oldNote!: string; 
-  viewTitle!: string; viewNote!: string; chosen!: number;
+  frmNotes!: FormGroup; 
+  frmEdit!: FormGroup;
+  editMdl = false; 
+  viewMdl = false;
+  oldTitle!: string; 
+  oldNote!: string; 
+  viewTitle!: string; 
+  viewNote!: string; 
+  chosen!: number;
   notes: Note[] = JSON.parse(localStorage.getItem('notes')!) || [];
   deleted: Note[] = JSON.parse(localStorage.getItem('deleted')!) || [];
   tab = localStorage.getItem("tab") || "notes";
@@ -22,10 +28,14 @@ export class AppComponent implements OnInit{
       note: ['',[Validators.required, CustomValidation.spaceValidation]]
     })
   }
-  switchTab(t:string){this.tab = t;localStorage.setItem('tab',this.tab);}
+  switchTab(t:string){
+    this.tab = t;
+    localStorage.setItem('tab',this.tab);
+  }
   addNote(){
     const {title,note} = this.frmNotes.value;
-    let data: Note = {title:title,note:note};this.notes.push(data);
+    let data: Note = {title:title,note:note};
+    this.notes.push(data);
     localStorage.setItem('notes',JSON.stringify(this.notes));
     this.frmNotes.reset({title:"",note:""})
   }
@@ -34,7 +44,8 @@ export class AppComponent implements OnInit{
     this.notes[this.chosen].title = newTitle;
     this.notes[this.chosen].note = newNote;
     localStorage.setItem('notes',JSON.stringify(this.notes));
-    this.frmEdit.reset({newTitle: "",newNote: "",});this.closeEditModal();
+    this.frmEdit.reset({newTitle: "",newNote: "",});
+    this.closeEditModal();
   }
   deleteNote(i:number){
     this.deleted.push(this.notes[i]);this.notes.splice(i,1);
@@ -48,13 +59,21 @@ export class AppComponent implements OnInit{
       newNote: ["",[Validators.required, CustomValidation.spaceValidation]]
     })
     this.oldTitle = this.notes[i].title;
-    this.oldNote = this.notes[i].note;this.chosen = i;
+    this.oldNote = this.notes[i].note;
+    this.chosen = i;
   }
-  openViewModal(i:number){this.viewMdl= true;this.viewTitle = this.notes[i].title;this.viewNote = this.notes[i].note;}
-  closeEditModal = () => this.editMdl = false;
-  closeViewModal = () => this.viewMdl = false;
+  openViewModal(i:number){
+    this.viewMdl= true;
+    this.viewTitle = this.notes[i].title;
+    this.viewNote = this.notes[i].note;
+  }
+  closeEditModal(){this.editMdl = false;}
+  closeViewModal(){this.viewMdl = false;}
   deleteForever(i:number){
     const sure = confirm("Are you sure to delete this note forever?");
-    if(sure){this.deleted.splice(i,1);localStorage.setItem('deleted',JSON.stringify(this.deleted));}
+    if(sure){
+      this.deleted.splice(i,1);
+      localStorage.setItem('deleted',JSON.stringify(this.deleted));
+    }
   }
 }
