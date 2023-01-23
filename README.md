@@ -4,7 +4,7 @@ This is an another sample project made by Arsen Gabrielyan from Scratch.
 
 ## Install:
 ```bash
-git clone https://github.com/ArsenGabrielyan/to-do-list.git
+git clone https://github.com/ArsenGabrielyan/notes-app.git
 cd to-do-list
 npm install
 npm install -g @angular/cli
