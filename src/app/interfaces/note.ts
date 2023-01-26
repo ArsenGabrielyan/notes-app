@@ -1,4 +1,4 @@
-export interface Note {
+export interface INote {
      title: string,
      note: string
 }

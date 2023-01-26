@@ -9,9 +9,8 @@ $grey: #9f9f9f;
           .tabs{
                display: flex;@include flex-align(flex-end,center);flex-wrap: wrap;
                button{
-                    border: none; background: none; outline: none;margin-left: 20px; cursor: pointer;
+                    border: none; background: none; outline: none;margin-left: 20px; cursor: pointer;span{font-size: 32px;transition: .3s ease all;}
                     &:hover span{opacity: .5;}&.active span{color: $green;}
-                    span{font-size: 32px;transition: .3s ease all;}
                }
           }
           .form{
@@ -22,8 +21,8 @@ $grey: #9f9f9f;
      .lower{
           margin: 10px 0;width: 100%;padding: 25px;column-count: 5;gap: 10px;
           .note{
-               break-inside: avoid;background: #a4ffb5;
-               max-width: 350px;padding: 25px;border-radius: $br;margin: 10px;
+               break-inside: avoid;background: #a4ffb5;margin: 10px;
+               max-width: 350px;padding: 25px;border-radius: $br;
                p,h2{overflow-wrap: break-word;word-break: break-word;}h2{margin-bottom: 15px;}
                p{@include truncate(12);}button{@include noteBtn();}}
                .buttons{margin: 10px 0;display:flex;flex-wrap:wrap;@include flex-align(space-between,center);
@@ -34,10 +33,8 @@ $grey: #9f9f9f;
 .modal-container{
      width: 100%;height: 100vh;position: fixed;top: 0;right: 0;background: rgba(0,0,0,.45);display: flex;flex-direction: column;@include flex-align(center,center);
      .edit-modal, .view-modal{
-          margin: 5px 0;background: #a4ffb5;width: 100%;
-          max-width: 450px;padding: 20px;position: relative;
-          .modal-title{.title{font-size: 25px;}.border{width: 100%;border-bottom: 1px solid $green;margin-top: 10px;}}
-          .closeBtn{@include close-btn;}
+          margin: 5px 0;background: #a4ffb5;width: 100%;max-width: 450px;padding: 20px;position: relative;
+          .modal-title{.title{font-size: 25px;}.border{width: 100%;border-bottom: 1px solid $green;margin-top: 10px;}}.closeBtn{@include close-btn;}
      }
      .edit-modal form{
           display: flex;@include flex-align(center,center);flex-direction: column;

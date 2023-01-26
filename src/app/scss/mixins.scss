@@ -8,18 +8,14 @@ $grey: #9f9f9f; $br: 7px;
      span{color: white;font-size: 30px;}&:hover{background: #75151e;}
 }
 @mixin input-btn{
-     width: 100%;padding: 8px 16px;
-     font-size: $input-size;margin: 10px 0;
-     border: 2px solid $green;color: $green;
-     border-radius: $br;background: none;
-     outline: none;cursor: pointer;
-     transition: .3s ease all;
+     width: 100%;padding: 8px 16px;font-size: $input-size;margin: 10px 0;
+     border: 2px solid $green;color: $green;border-radius: $br;background: none;
+     outline: none;cursor: pointer;transition: .3s ease all;
      &:disabled{border:2px solid grey;color: grey;cursor: auto;}
      &:hover:not(:disabled){background: #22b455;color: white;}
 }
 @mixin input-box{
-     width: 100%;padding: 8px 16px;
-     margin: 10px 0;font-size: $input-size;
+     width: 100%;padding: 8px 16px;margin: 10px 0;font-size: $input-size;
      border: 2px solid $grey;outline: none;
      border-radius: $br;transition: .3s ease all;&:focus{border-color: $green;}
 }
@@ -29,9 +25,8 @@ $grey: #9f9f9f; $br: 7px;
      -webkit-box-orient: vertical;box-orient: vertical;
 }
 @mixin noteBtn($m: 5px){
-     padding: 10px;margin:$m;border: 2px solid $green;
-     background: none; outline: none;font-size: $input-size;
-     border-radius: $br;cursor: pointer;
-     transition: .3s ease all;&:hover{background: #22b455;span{color: white;}}
+     padding: 10px;margin:$m;border: 2px solid $green;transition: .3s ease all;
+     background: none; outline: none;font-size: $input-size;border-radius: $br;cursor: pointer;
+     &:hover{background: #22b455;span{color: white;}}
      span{color: #22b455;transition: .3s ease all;}
 }
