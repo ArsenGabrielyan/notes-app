@@ -21,6 +21,7 @@ export class AppComponent implements OnInit{
   notes: INote[] = JSON.parse(localStorage.getItem('notes')!) || [];
   deleted: INote[] = JSON.parse(localStorage.getItem('deleted')!) || [];
   tab = localStorage.getItem("tab") || "notes";
+
   constructor(private fbuild: FormBuilder){}
   ngOnInit():void{
     this.frmNotes = this.fbuild.group({
@@ -28,6 +29,7 @@ export class AppComponent implements OnInit{
       note: ['',[Validators.required, CustomValidation.spaceValidation]]
     })
   }
+
   switchTab(t:string){
     this.tab = t;
     localStorage.setItem('tab',this.tab);
@@ -37,7 +39,7 @@ export class AppComponent implements OnInit{
     let data: INote = {title:title,note:note};
     this.notes.push(data);
     localStorage.setItem('notes',JSON.stringify(this.notes));
-    this.frmNotes.reset({title:"",note:""})
+    this.frmNotes.reset({title:"",note:""});
   }
   editNote(){
     const {newTitle,newNote} = this.frmEdit.value;
@@ -48,7 +50,8 @@ export class AppComponent implements OnInit{
     this.closeEditModal();
   }
   deleteNote(i:number){
-    this.deleted.push(this.notes[i]);this.notes.splice(i,1);
+    this.deleted.push(this.notes[i]);
+    this.notes.splice(i,1);
     localStorage.setItem('notes',JSON.stringify(this.notes));
     localStorage.setItem('deleted',JSON.stringify(this.deleted));
   }
@@ -67,8 +70,12 @@ export class AppComponent implements OnInit{
     this.viewTitle = this.notes[i].title;
     this.viewNote = this.notes[i].note;
   }
-  closeEditModal(){this.editMdl = false;}
-  closeViewModal(){this.viewMdl = false;}
+  closeEditModal(){
+    this.editMdl = false;
+  }
+  closeViewModal(){
+    this.viewMdl = false;
+  }
   deleteForever(i:number){
     const sure = confirm("Are you sure to delete this note forever?");
     if(sure){
