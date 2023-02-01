@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CustomValidation } from './classes/custom-validation';
 import { INote } from './interfaces/note';
+import { NotesService } from './services/notes.service';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,7 @@ export class AppComponent implements OnInit{
   deleted: INote[] = JSON.parse(localStorage.getItem('deleted')!) || [];
   tab = localStorage.getItem("tab") || "notes";
 
-  constructor(private fbuild: FormBuilder){}
+  constructor(private fbuild: FormBuilder, private noteService: NotesService){}
   ngOnInit():void{
     this.frmNotes = this.fbuild.group({
       title: ['', [Validators.required, CustomValidation.spaceValidation]],
@@ -35,25 +36,14 @@ export class AppComponent implements OnInit{
     localStorage.setItem('tab',this.tab);
   }
   addNote(){
-    const {title,note} = this.frmNotes.value;
-    let data: INote = {title:title,note:note};
-    this.notes.push(data);
-    localStorage.setItem('notes',JSON.stringify(this.notes));
-    this.frmNotes.reset({title:"",note:""});
+    this.noteService.addNote(this.notes, this.frmNotes);
   }
   editNote(){
-    const {newTitle,newNote} = this.frmEdit.value;
-    this.notes[this.chosen].title = newTitle;
-    this.notes[this.chosen].note = newNote;
-    localStorage.setItem('notes',JSON.stringify(this.notes));
-    this.frmEdit.reset({newTitle: "",newNote: "",});
+    this.noteService.editNote(this.frmEdit, this.notes, this.chosen);
     this.closeEditModal();
   }
   deleteNote(i:number){
-    this.deleted.push(this.notes[i]);
-    this.notes.splice(i,1);
-    localStorage.setItem('notes',JSON.stringify(this.notes));
-    localStorage.setItem('deleted',JSON.stringify(this.deleted));
+    this.noteService.deleteNote(this.deleted,this.notes,i);
   }
   openEditModal(i:number){
     this.editMdl = true;
