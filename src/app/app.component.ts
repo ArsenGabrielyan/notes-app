@@ -12,10 +12,8 @@ import { NotesService } from './services/notes.service';
 export class AppComponent implements OnInit{
   frmNotes!: FormGroup; 
   frmEdit!: FormGroup;
-  editMdl = false; 
+  canEdit = false; 
   viewMdl = false;
-  oldTitle!: string; 
-  oldNote!: string; 
   viewTitle!: string; 
   viewNote!: string; 
   chosen!: number;
@@ -36,32 +34,27 @@ export class AppComponent implements OnInit{
     localStorage.setItem('tab',this.tab);
   }
   addNote(){
-    this.noteService.addNote(this.notes, this.frmNotes);
+    this.noteService.add(this.notes, this.frmNotes);
   }
   editNote(){
-    this.noteService.editNote(this.frmEdit, this.notes, this.chosen);
-    this.closeEditModal();
+    this.noteService.edit(this.frmNotes, this.notes, this.chosen);
+    this.canEdit = false;
   }
   deleteNote(i:number){
-    this.noteService.deleteNote(this.deleted,this.notes,i);
+    this.noteService.delete(this.deleted,this.notes,i);
   }
-  openEditModal(i:number){
-    this.editMdl = true;
-    this.frmEdit = this.fbuild.group({
-      newTitle: ["",[Validators.required, CustomValidation.spaceValidation]],
-      newNote: ["",[Validators.required, CustomValidation.spaceValidation]]
-    })
-    this.oldTitle = this.notes[i].title;
-    this.oldNote = this.notes[i].note;
+  openEdit(i:number){
+    this.canEdit = true;
+    this.frmNotes.setValue({
+      title: this.notes[i].title,
+      note: this.notes[i].note
+    });
     this.chosen = i;
   }
   openViewModal(i:number){
     this.viewMdl= true;
     this.viewTitle = this.notes[i].title;
     this.viewNote = this.notes[i].note;
-  }
-  closeEditModal(){
-    this.editMdl = false;
   }
   closeViewModal(){
     this.viewMdl = false;
